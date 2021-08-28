@@ -449,6 +449,10 @@ defmodule Scrivener.HTML do
   defp link_classes_for_style(_paginator, :ellipsis, :materialize), do: []
   defp link_classes_for_style(_paginator, :ellipsis, :bulma), do: ["pagination-ellipsis"]
 
+  defp link_classes_for_style(paginator, :ellipsis, :tailwind) do
+    ["relative","inline-flex","items-center","px-4","py-2","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-700"]
+  end
+
   defp link_classes_for_style(paginator, page_number, :tailwind) do
     if(paginator.page_number == page_number,
       do: ["z-10", "bg-indigo-50","border-indigo-500","text-indigo-600","hover:bg-gray-50","relative","inline-flex","items-center","px-4","py-2","border","text-sm","font-medium"],
