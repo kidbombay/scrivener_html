@@ -496,12 +496,6 @@ defmodule Scrivener.HTML do
     ["relative","inline-flex","items-center","px-2","py-2","rounded-r-md","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-500","hover:bg-gray-50"]
   end
 
-  # defp link_classes_for_style(paginator, text, page_number, :tailwind) do
-  #   IO.puts("text: #{text}")
-  #   IO.puts("page_number: #{page_number}")
-  #   []
-  # end
-
   defp link_classes_for_style(paginator, :ellipsis, :tailwind) do
     ["relative","inline-flex","items-center","px-4","py-2","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-700"]
   end
