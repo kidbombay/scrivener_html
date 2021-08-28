@@ -370,6 +370,38 @@ defmodule Scrivener.HTML do
     end
   end
 
+  defp page({text, page_number}, url_params, args, page_param, path, paginator, :tailwind) do
+    IO.puts(text)
+    params_with_page =
+      url_params ++
+        case page_number > 1 do
+          true -> [{page_param, page_number}]
+          false -> []
+        end
+
+    to = apply(path, args ++ [params_with_page])
+
+    if to do
+      if active_page?(paginator, page_number) do
+        content_tag(:a, safe(text),
+          class: link_classes_for_style(paginator, page_number, :tailwind) |> Enum.join(" ")
+        )
+      else
+        link(safe(text),
+          to: to,
+          rel: Scrivener.HTML.SEO.rel(paginator, page_number),
+          class: link_classes_for_style(paginator, page_number, :tailwind) |> Enum.join(" ")
+        )
+      end
+    else
+      :tailwind
+      |> blank_link_tag()
+      |> content_tag(safe(text),
+        class: link_classes_for_style(paginator, page_number, :tailwind) |> Enum.join(" ")
+      )
+    end
+  end
+
   defp page({text, page_number}, url_params, args, page_param, path, paginator, style) do
     params_with_page =
       url_params ++
