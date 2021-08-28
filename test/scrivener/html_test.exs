@@ -318,7 +318,9 @@ defmodule Scrivener.HTMLTest do
 
   describe "Phoenix conn()" do
     test "handles no entries" do
-      use Phoenix.ConnTest
+      import Plug.Conn
+      import Phoenix.ConnTest
+
       Application.put_env(:scrivener_html, :view_style, :bootstrap)
       Application.put_env(:scrivener_html, :routes_helper, MyApp.Router.Helpers)
 
@@ -366,7 +368,9 @@ defmodule Scrivener.HTMLTest do
     end
 
     test "allows other url parameters" do
-      use Phoenix.ConnTest
+      import Plug.Conn
+      import Phoenix.ConnTest
+
       Application.put_env(:scrivener_html, :view_style, :bootstrap)
       Application.put_env(:scrivener_html, :routes_helper, MyApp.Router.Helpers)
 
@@ -387,7 +391,8 @@ defmodule Scrivener.HTMLTest do
   end
 
   describe "View Styles" do
-    use Phoenix.ConnTest
+    import Plug.Conn
+    import Phoenix.ConnTest
 
     test "renders Semantic UI styling" do
       assert {:safe,

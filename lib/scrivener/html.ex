@@ -1,7 +1,7 @@
 defmodule Scrivener.HTML do
   use Phoenix.HTML
   @defaults [view_style: :bootstrap, action: :index, page_param: :page, hide_single: false]
-  @view_styles [:bootstrap, :semantic, :foundation, :bootstrap_v4, :materialize, :bulma]
+  @view_styles [:bootstrap, :semantic, :foundation, :bootstrap_v4, :materialize, :bulma, :tailwind]
   @raw_defaults [
     distance: 5,
     next: ">>",
@@ -189,6 +189,22 @@ defmodule Scrivener.HTML do
     raise "Scrivener.HTML: View style #{inspect(style)} is not a valid view style. Please use one of #{
             inspect(@view_styles)
           }"
+  end
+
+  # Tailwind implementation
+  defp _pagination_links(paginator,
+         view_style: :tailwind,
+         path: path,
+         args: args,
+         page_param: page_param,
+         params: params
+       ) do
+    url_params = Keyword.drop(params, Keyword.keys(@raw_defaults))
+
+    content_tag :nav, class: "relative z-0 inline-flex rounded-md shadow-sm -space-x-px" do      
+      raw_pagination_links(paginator, params)
+      |> Enum.map(&page(&1, url_params, args, page_param, path, paginator, :tailwind))
+    end
   end
 
   # Bootstrap implementation
@@ -390,6 +406,12 @@ defmodule Scrivener.HTML do
   defp active_page?(%{page_number: page_number}, page_number), do: true
   defp active_page?(_paginator, _page_number), do: false
 
+  defp li_classes_for_style(_paginator, :ellipsis, :tailwind), do: []
+
+  defp li_classes_for_style(paginator, page_number, :tailwind) do
+    if(paginator.page_number == page_number, do: ["active"], else: [])
+  end
+
   defp li_classes_for_style(_paginator, :ellipsis, :bootstrap), do: []
 
   defp li_classes_for_style(paginator, page_number, :bootstrap) do
@@ -426,6 +448,14 @@ defmodule Scrivener.HTML do
   defp link_classes_for_style(_paginator, :ellipsis, :semantic), do: ["disabled", "item"]
   defp link_classes_for_style(_paginator, :ellipsis, :materialize), do: []
   defp link_classes_for_style(_paginator, :ellipsis, :bulma), do: ["pagination-ellipsis"]
+
+  defp link_classes_for_style(paginator, page_number, :tailwind) do
+    if(paginator.page_number == page_number,
+      do: ["z-10", "bg-indigo-50","border-indigo-500","text-indigo-600","hover:bg-gray-50","relative","inline-flex","items-center","px-4","py-2","border","text-sm","font-medium"],
+      else: ["bg-white","border-gray-300","text-gray-500","hover:bg-gray-50","relative","inline-flex","items-center","px-4","py-2","border","text-sm","font-medium"]
+    )
+  end
+
   defp link_classes_for_style(_paginator, _page_number, :bootstrap), do: []
   defp link_classes_for_style(_paginator, _page_number, :bootstrap_v4), do: ["page-link"]
   defp link_classes_for_style(_paginator, _page_number, :foundation), do: []
