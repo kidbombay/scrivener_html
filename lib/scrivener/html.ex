@@ -379,7 +379,6 @@ defmodule Scrivener.HTML do
   end
 
   defp page({text, page_number}, url_params, args, page_param, path, paginator, :tailwind) do
-    # IO.inspect([text,page_number])
     params_with_page =
       url_params ++
         case page_number > 1 do
@@ -503,7 +502,7 @@ defmodule Scrivener.HTML do
   #   []
   # end
 
-  defp link_classes_for_style(paginator, text, :ellipsis, :tailwind) do
+  defp link_classes_for_style(paginator, :ellipsis, :tailwind) do
     ["relative","inline-flex","items-center","px-4","py-2","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-700"]
   end
 
