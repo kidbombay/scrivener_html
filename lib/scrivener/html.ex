@@ -331,6 +331,14 @@ defmodule Scrivener.HTML do
     )
   end
 
+  defp page({:ellipsis, text}, _url_params, _args, _page_param, _path, paginator, :tailwind) do
+    :tailwind
+    |> ellipsis_tag
+    |> content_tag(safe(text),
+      class: link_classes_for_style(paginator, :ellipsis, :tailwind) |> Enum.join(" ")
+    )
+  end
+
   defp page({:ellipsis, text}, _url_params, _args, _page_param, _path, paginator, style) do
     content_tag(:li, class: li_classes_for_style(paginator, :ellipsis, style) |> Enum.join(" ")) do
       style
@@ -371,7 +379,6 @@ defmodule Scrivener.HTML do
   end
 
   defp page({text, page_number}, url_params, args, page_param, path, paginator, :tailwind) do
-    IO.puts(text)
     params_with_page =
       url_params ++
         case page_number > 1 do
