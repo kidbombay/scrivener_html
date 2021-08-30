@@ -488,25 +488,6 @@ defmodule Scrivener.HTML do
   defp link_classes_for_style(_paginator, :ellipsis, :materialize), do: []
   defp link_classes_for_style(_paginator, :ellipsis, :bulma), do: ["pagination-ellipsis"]
 
-  defp link_classes_for_style(paginator, "<<", page_number, :tailwind) do
-    ["relative","inline-flex","items-center","px-2","py-2","rounded-l-md","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-500","hover:bg-gray-50"]
-  end
-
-  defp link_classes_for_style(paginator, ">>", page_number, :tailwind) do
-    ["relative","inline-flex","items-center","px-2","py-2","rounded-r-md","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-500","hover:bg-gray-50"]
-  end
-
-  defp link_classes_for_style(paginator, :ellipsis, :tailwind) do
-    ["relative","inline-flex","items-center","px-4","py-2","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-700"]
-  end
-
-  defp link_classes_for_style(paginator, text, page_number, :tailwind) do
-    if(paginator.page_number == page_number,
-      do: ["z-10", "bg-indigo-50","border-indigo-500","text-indigo-600","hover:bg-gray-50","relative","inline-flex","items-center","px-4","py-2","border","text-sm","font-medium"],
-      else: ["bg-white","border-gray-300","text-gray-500","hover:bg-gray-50","relative","inline-flex","items-center","px-4","py-2","border","text-sm","font-medium"]
-    )
-  end
-
   defp link_classes_for_style(_paginator, _page_number, :bootstrap), do: []
   defp link_classes_for_style(_paginator, _page_number, :bootstrap_v4), do: ["page-link"]
   defp link_classes_for_style(_paginator, _page_number, :foundation), do: []
@@ -521,6 +502,25 @@ defmodule Scrivener.HTML do
     if(paginator.page_number == page_number,
       do: ["pagination-link", "is-current"],
       else: ["pagination-link"]
+    )
+  end
+
+    defp link_classes_for_style(_paginator, :ellipsis, :tailwind) do
+    ["relative","inline-flex","items-center","px-4","py-2","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-700"]
+  end
+
+  defp link_classes_for_style(_paginator, "<<", _page_number, :tailwind) do
+    ["relative","inline-flex","items-center","px-2","py-2","rounded-l-md","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-500","hover:bg-gray-50"]
+  end
+
+  defp link_classes_for_style(_paginator, ">>", _page_number, :tailwind) do
+    ["relative","inline-flex","items-center","px-2","py-2","rounded-r-md","border","border-gray-300","bg-white","text-sm","font-medium","text-gray-500","hover:bg-gray-50"]
+  end
+
+  defp link_classes_for_style(paginator, _text, page_number, :tailwind) do
+    if(paginator.page_number == page_number,
+      do: ["z-10", "bg-indigo-50","border-indigo-500","text-indigo-600","hover:bg-gray-50","relative","inline-flex","items-center","px-4","py-2","border","text-sm","font-medium"],
+      else: ["bg-white","border-gray-300","text-gray-500","hover:bg-gray-50","relative","inline-flex","items-center","px-4","py-2","border","text-sm","font-medium"]
     )
   end
 
